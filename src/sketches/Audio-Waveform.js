@@ -27,6 +27,6 @@ export default p5 => {
     p5.background(25)
     p5.stroke(225)
 
-    wavePoints.forEach((p) => p5.point(p.x, p.y))
+    wavePoints.forEach((p) => p5.line(p.x, p.y, p.x, height))
   }
 }
