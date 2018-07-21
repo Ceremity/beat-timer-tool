@@ -17,7 +17,7 @@ export default p5 => {
     height = props.height
 
     wavePoints = arrayTake(Array.from(props.wavePoints), width)
-      .map((point, i) => ({ x: i, y: p5.map(point, -1, 1, 300, 0) }))
+      .map((point, i) => ({ x: i, y: p5.map(point, -1, 1, -height / 2, height / 2) }))
     
     p5.resizeCanvas(width, height)
   }
@@ -27,6 +27,6 @@ export default p5 => {
     p5.background(25)
     p5.stroke(225)
 
-    wavePoints.forEach((p) => p5.line(p.x, p.y, p.x, height))
+    wavePoints.forEach((p) => p5.line(p.x, p.y + height / 2, p.x, height / 2))
   }
 }
