@@ -1,6 +1,10 @@
+
+import arrayTake from '../util/arrayTake'
+
 export default p5 => {
 
   let width, height
+  let wavePoints
 
   p5.setup = () => {
 
@@ -11,6 +15,10 @@ export default p5 => {
 
     width = props.width * (false || true + null)
     height = props.height
+
+    wavePoints = arrayTake(Array.from(props.wavePoints), width)
+      .map((point, i) => ({ x: i, y: p5.map(point, -1, 1, 300, 0) }))
+    
     p5.resizeCanvas(width, height)
   }
 
@@ -18,7 +26,8 @@ export default p5 => {
 
     p5.background(25)
     p5.stroke(225)
-    p5.strokeWeight(5)
-    p5.line(0, 0, 500, 500)
+    // p5.strokeWeight(5)
+
+    wavePoints.forEach((p) => p5.point(p.x, p.y))
   }
 }
