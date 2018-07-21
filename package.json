@@ -3,12 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "peaks.js": "^0.9.10",
+    "p5": "^0.6.1",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "react-scripts": "1.1.4",
-    "react-wavesurfer": "^0.8.6",
-    "wavesurfer.js": "^2.0.0-beta01"
+    "react-p5-wrapper": "0.0.4",
+    "react-scripts": "1.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
