@@ -26,7 +26,6 @@ export default p5 => {
 
     p5.background(25)
     p5.stroke(225)
-    // p5.strokeWeight(5)
 
     wavePoints.forEach((p) => p5.point(p.x, p.y))
   }

@@ -7,35 +7,42 @@ export default class Waveform extends Component {
   constructor() {
     super()
 
+    const audioCtxt = new AudioContext()
+    const audioSrc = audioCtxt.createBufferSource()
+    audioSrc.connect(audioCtxt.destination)
+
+    const reader = new FileReader()
+    reader.onload = this.showWaveform.bind(this)
+
     this.state = {
-      reader: new FileReader(),
       selectedFile: null,
       wavePoints: [],
       width: 0,
-      height: 0
+      height: 0,
+      reader,
+      audioCtxt,
+      audioSrc
     }
-
-    this.state.reader.onload = this.showWaveform.bind(this)
 
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
     this.fileChanged = this.fileChanged.bind(this)
-    // this.showWaveform = this.showWaveform.bind(this)
+    this.stopSong = this.togglePlaying.bind(this)
   }
 
   showWaveform() {
 
-    const audioCtx = new AudioContext()
-    const audio = audioCtx.createBufferSource()
-    audio.connect(audioCtx.destination)
+    this.state.audioCtxt.decodeAudioData(this.state.reader.result, (res) => {
 
-    audioCtx.decodeAudioData(this.state.reader.result, (res) => {
+      const updatedAudioSrc = this.state.audioSrc
 
-      audio.buffer = res
+      updatedAudioSrc.buffer = res
+      updatedAudioSrc.start()
+
       this.setState({
         ...this.state,
-        wavePoints: audio.buffer.getChannelData(0)
+        audioSrc: updatedAudioSrc,
+        wavePoints: updatedAudioSrc.buffer.getChannelData(0)
       })
-      audio.start()
     })
 
   }
@@ -67,12 +74,19 @@ export default class Waveform extends Component {
     this.state.reader.readAsArrayBuffer(selectedFile)
   }
 
+  togglePlaying() {
+
+  }
+
   render() {
     return (
       <div id="my-canvas">
-        <P5Wrapper sketch={sketch} width={this.state.width} height={300} wavePoints={this.state.wavePoints} />
+        <P5Wrapper 
+          sketch={sketch} wavePoints={this.state.wavePoints}
+          width={this.state.width} height={300}
+        />
         <input type="file" id="song" onChange={this.fileChanged} />
-        {/* <button onClick={this.playSong}>Play</button> */}
+        {/* <button onClick={this.togglePlaying}>Stop</button> */}
       </div>
     )
   }

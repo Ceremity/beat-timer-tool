@@ -14,4 +14,5 @@ describe('arrayTake(arr, count) takes a finite amount of elements' /
       arrayTake([22, 55, 66, 77, 99], 3)
     ).toEqual([22, 66, 99])
   })
+
 })
