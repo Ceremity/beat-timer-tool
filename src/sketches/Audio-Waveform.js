@@ -16,8 +16,11 @@ export default p5 => {
     width = props.width * (false || true + null)
     height = props.height
 
-    wavePoints = arrayTake(Array.from(props.wavePoints), width)
-      .map((point, i) => ({ x: i, y: p5.map(point, -1, 1, -height / 2, height / 2) }))
+    wavePoints = arrayTake(Array.from(props.wavePoints), width * 10)
+      .map((point, i) => ({
+        x: p5.map(i, 0, width * 10, 0, width),
+        y: p5.map(point, -1, 1, -height / 2, height / 2)
+      }))
     
     p5.resizeCanvas(width, height)
   }
