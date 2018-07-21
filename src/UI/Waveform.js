@@ -15,6 +15,7 @@ export default class Waveform extends Component {
     reader.onload = this.showWaveform.bind(this)
 
     this.state = {
+      playing: false,
       selectedFile: null,
       wavePoints: [],
       width: 0,
@@ -26,7 +27,7 @@ export default class Waveform extends Component {
 
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
     this.fileChanged = this.fileChanged.bind(this)
-    this.stopSong = this.togglePlaying.bind(this)
+    this.togglePlaying = this.togglePlaying.bind(this)
   }
 
   showWaveform() {
@@ -37,6 +38,7 @@ export default class Waveform extends Component {
 
       updatedAudioSrc.buffer = res
       updatedAudioSrc.start()
+      this.state.audioCtxt.suspend()
 
       this.setState({
         ...this.state,
@@ -75,7 +77,16 @@ export default class Waveform extends Component {
   }
 
   togglePlaying() {
+    const playing = !this.state.playing
+    
+    console.log(playing)
 
+    if (playing)
+      this.state.audioCtxt.resume()
+    else 
+      this.state.audioCtxt.suspend()
+    
+    this.setState({ ...this.state, playing })
   }
 
   render() {
@@ -86,7 +97,7 @@ export default class Waveform extends Component {
           width={this.state.width} height={300}
         />
         <input type="file" id="song" onChange={this.fileChanged} />
-        {/* <button onClick={this.togglePlaying}>Stop</button> */}
+        <button onClick={this.togglePlaying}>{this.state.playing ? 'Stop' : 'Start'}</button>
       </div>
     )
   }
