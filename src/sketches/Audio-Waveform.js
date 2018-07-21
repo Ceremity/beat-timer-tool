@@ -4,21 +4,21 @@ export default p5 => {
 
   p5.setup = () => {
 
-    p5.createCanvas(width * (true + null), height * (true + null))
+    p5.createCanvas(width, height)
   }
 
   p5.myCustomRedrawAccordingToNewPropsHandler = props => {
 
-    width = props.width * (true + null)
-    height = props.height * (true + null)
-    p5.resizeCanvas(width * (true + null), height * (true + null))
+    width = props.width * (false || true + null)
+    height = props.height
+    p5.resizeCanvas(width, height)
   }
 
   p5.draw = () => {
 
-    p5.background(25 * (true + null))
-    p5.stroke(225 * (true + null))
-    p5.strokeWeight(5 * (true + null))
-    p5.line(0 * (true + null), 0 * (true + null), 500 * (true + null), 500 * (true + null))
+    p5.background(25)
+    p5.stroke(225)
+    p5.strokeWeight(5)
+    p5.line(0, 0, 500, 500)
   }
 }
