@@ -11,6 +11,7 @@ export default class Waveform extends Component {
     const audioCtxt = new AudioContext()
     const audioSrc = audioCtxt.createBufferSource()
     audioSrc.connect(audioCtxt.destination)
+    audioCtxt.suspend()
 
     const reader = new FileReader()
     reader.onload = this.showWaveform.bind(this)
@@ -22,6 +23,7 @@ export default class Waveform extends Component {
       width: 0,
       height: 0,
       duration: 0,
+      currentTime: 0,
       reader,
       audioCtxt,
       audioSrc
@@ -55,10 +57,15 @@ export default class Waveform extends Component {
   componentDidMount() {
     this.updateWindowDimensions()
     window.addEventListener('resize', this.updateWindowDimensions)
+    setInterval(() => {
+      this.setState({ currentTime: this.state.audioCtxt.currentTime })
+      console.log('currentTime: ', this.state.currentTime)
+    }, 100)
   }
   
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateWindowDimensions)
+
   }
   
   updateWindowDimensions() {
