@@ -29,10 +29,13 @@ export default p5 => {
         loading = false
       })
     
-    console.log('after rendering waveform')
+    console.log('after rendering waveform', loading)
   }
 
   p5.draw = () => {
+
+    if (loading)
+      console.log('loading')
 
     if (loading)
       p5.background(25) // loading animation?
