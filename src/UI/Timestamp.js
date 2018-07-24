@@ -7,10 +7,10 @@ export default ({ stamp, deleteHandler, positionChangeHandler, id }) => {
 		<div className="timestamp">
 			<h3>{stamp.timestamp}</h3>
 			<select onChange={(e) => positionChangeHandler(id, e.target.value)}>
-				<option value={0}>Top Right</option>
-				<option value={1}>Top Left</option>
-				<option value={2}>Bottom Right</option>
-				<option value={3}>Bottom Left</option>
+				<option value={0}>Top Left</option>
+				<option value={1}>Top Right</option>
+				<option value={2}>Bottom Left</option>
+				<option value={3}>Bottom Right</option>
 			</select>
 			<GoX className="delete-icon" onClick={() => deleteHandler(id)} /> 
 		</div>

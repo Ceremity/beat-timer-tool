@@ -20,6 +20,7 @@ ul {
   list-style-type: none;
 }
 
+
 #content-wrapper {
   display: grid;  
   grid-template-columns: 1fr 1fr;
@@ -27,6 +28,13 @@ ul {
 
 #list {
   grid-column: 1 / 2;
+}
+
+#list li {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  background: #00FF00;
+  padding: 10px;
+  margin: 15px 0 15px 0;
 }
 
 #input-wrapper {
