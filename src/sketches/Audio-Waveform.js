@@ -1,12 +1,20 @@
 
 import arrayTake from '../util/arrayTake'
 import Promise from 'bluebird'
+import WaveFormer from '../util/WaveFormer.worker.js'
+
 
 export default p5 => {
 
+  const waveFormer = new WaveFormer()
   let width, height
   let cachedWaveformGraphics
   let loading
+
+  waveFormer.onmessage = (d) => {
+    cachedWaveformGraphics = d.data
+    loading = false
+  }
 
   p5.setup = () => {
 
@@ -16,26 +24,21 @@ export default p5 => {
 
   p5.myCustomRedrawAccordingToNewPropsHandler = props => {
 
-    width = props.width * (false || true + null)
+    width = props.width
     height = props.height
     
     p5.resizeCanvas(width, height)
 
     loading = true
 
-    renderWaveform(p5.createGraphics(width, height), props.wavePoints)
-      .then((newWaveformGraphics) => {
-        cachedWaveformGraphics = newWaveformGraphics
-        loading = false
-      })
-    
-    console.log('after rendering waveform', loading)
+    // waveFormer.postMessage({
+    //   pg: p5.createGraphics(width, height),
+    //   wavePoints: props.wavePoints
+    // })
+    waveFormer.postMessage('This is my message')
   }
 
   p5.draw = () => {
-
-    if (loading)
-      console.log('loading')
 
     if (loading)
       p5.background(25) // loading animation?
@@ -45,26 +48,4 @@ export default p5 => {
     p5.stroke(225)
 
   }
-}
-
-const renderWaveform = (pg, wavePoints) => {
-
-  console.log('rendering waveform')
-
-  return Promise.resolve(pg)
-    .then(pg => {
-      pg.background(25)
-      pg.stroke(255)
-      
-      const mappedPoints = arrayTake(Array.from(wavePoints), pg.width * 10)
-        .map((point, i) => ({
-          x: pg.map(i, 0, pg.width * 10, 0, pg.width),
-          y: pg.map(point, -1, 1, -pg.height / 2, pg.height / 2)
-        }))
-
-      mappedPoints.forEach((p) => pg.line(p.x, p.y + pg.height / 2, p.x, pg.height / 2))
-      console.log('done rendering')
-      return pg
-    })
-
 }
