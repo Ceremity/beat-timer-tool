@@ -16,8 +16,6 @@ export default p5 => {
 
     if (!(wavePoints && wavePoints.length > 0))
       return
-
-    timestamps.push(p5.mouseX)
     newTimeHandler(p5.mouseX / width)
   }
 
@@ -34,7 +32,8 @@ export default p5 => {
     width = props.width
     height = props.height
     progress = props.progress
-    newTimeHandler = props.newTimeHandler
+    newTimeHandler = props.newTimeHandler 
+    timestamps = props.timestamps.map(x => x * width)
     
     p5.resizeCanvas(width, height)
 

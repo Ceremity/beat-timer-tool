@@ -112,18 +112,12 @@ export default class Waveform extends Component {
           width={this.state.width} height={300}
           progress={this.state.audioCtxt.currentTime / this.state.duration}
           newTimeHandler={this.newTimeHandler}
+          timestamps={this.props.timestamps
+            .map(({ timestamp }) => timestamp / this.state.duration)}
         />
         <input type="file" id="song" onChange={this.fileChanged} />
         <button onClick={this.togglePlaying}>{this.state.playing ? 'Stop' : 'Start'}</button>
       </div>
     )
   }
-}
-
-
-const bigFunction = (n) => {
-  return Promise.resolve(n)
-    .then(n => Array(n).fill(n))
-    .map(a => Array(a))
-    .map(a => a.map(b => Math.sqrt(b)))
 }
