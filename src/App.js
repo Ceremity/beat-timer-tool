@@ -6,7 +6,18 @@ class App extends Component {
 
   constructor(props) {
     super(props)
-    console.log()
+
+    this.state = {
+      timestamps: []
+    }
+
+    this.newTimestampHandler = this.newTimestampHandler.bind(this)
+  }
+
+  newTimestampHandler(timestamp) {
+    this.setState({
+      timestamps: [timestamp, ...this.state.timestamps]
+    })
   }
 
   render() {
@@ -15,7 +26,7 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">Welcome to Beat Time Tool</h1>
         </header>
-        <Waveform />
+        <Waveform newTimestampHandler={this.newTimestampHandler.bind(this)}/>
       </div>
     )
   }

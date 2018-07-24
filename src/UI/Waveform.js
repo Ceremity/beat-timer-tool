@@ -32,6 +32,7 @@ export default class Waveform extends Component {
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
     this.fileChanged = this.fileChanged.bind(this)
     this.togglePlaying = this.togglePlaying.bind(this)
+    this.newTimeHandler = this.newTimeHandler.bind(this)
   }
 
   showWaveform() {
@@ -59,7 +60,6 @@ export default class Waveform extends Component {
     window.addEventListener('resize', this.updateWindowDimensions)
     setInterval(() => {
       this.setState({ currentTime: this.state.audioCtxt.currentTime })
-      console.log('currentTime: ', this.state.currentTime)
     }, 100)
   }
   
@@ -100,6 +100,10 @@ export default class Waveform extends Component {
     this.setState({ ...this.state, playing })
   }
 
+  newTimeHandler(progress) {
+    this.props.newTimestampHandler(progress * this.state.duration)
+  }
+
   render() {
     return (
       <div id="my-canvas">
@@ -107,6 +111,7 @@ export default class Waveform extends Component {
           sketch={sketch} wavePoints={this.state.wavePoints}
           width={this.state.width} height={300}
           progress={this.state.audioCtxt.currentTime / this.state.duration}
+          newTimeHandler={this.newTimeHandler}
         />
         <input type="file" id="song" onChange={this.fileChanged} />
         <button onClick={this.togglePlaying}>{this.state.playing ? 'Stop' : 'Start'}</button>
