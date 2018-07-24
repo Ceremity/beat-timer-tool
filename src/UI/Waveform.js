@@ -79,7 +79,7 @@ export default class Waveform extends Component {
   togglePlaying() {
     const playing = !this.state.playing
     
-    console.log(playing)
+    console.log(playing ? 'playing' : 'not playing')
 
     if (playing)
       this.state.audioCtxt.resume()
