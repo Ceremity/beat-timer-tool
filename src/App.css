@@ -15,3 +15,33 @@
 .App-intro {
   font-size: large;
 }
+
+ul {
+  list-style-type: none;
+}
+
+#content-wrapper {
+  display: grid;  
+  grid-template-columns: 1fr 1fr;
+}
+
+#list {
+  grid-column: 1 / 2;
+}
+
+#input-wrapper {
+  grid-column: 2 / 3;
+}
+
+.timestamp {
+  display: grid;
+  grid-template-columns: 5fr 1fr 1fr;
+}
+
+.timestamp h3 {
+  text-align: left;
+}
+
+.delete-icon {
+  font-size: 4em;
+}
