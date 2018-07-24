@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import P5Wrapper from 'react-p5-wrapper'
 import sketch from '../sketches/Audio-Waveform.js'
+import Promise from 'bluebird'
 
 export default class Waveform extends Component {
 
@@ -20,6 +21,7 @@ export default class Waveform extends Component {
       wavePoints: [],
       width: 0,
       height: 0,
+      duration: 0,
       reader,
       audioCtxt,
       audioSrc
@@ -42,6 +44,7 @@ export default class Waveform extends Component {
 
       this.setState({
         ...this.state,
+        duration: res.duration,
         audioSrc: updatedAudioSrc,
         wavePoints: updatedAudioSrc.buffer.getChannelData(0)
       })
@@ -77,6 +80,7 @@ export default class Waveform extends Component {
   }
 
   togglePlaying() {
+      
     const playing = !this.state.playing
     
     console.log(playing ? 'playing' : 'not playing')
@@ -95,10 +99,19 @@ export default class Waveform extends Component {
         <P5Wrapper 
           sketch={sketch} wavePoints={this.state.wavePoints}
           width={this.state.width} height={300}
+          progress={this.state.audioCtxt.currentTime / this.state.duration}
         />
         <input type="file" id="song" onChange={this.fileChanged} />
         <button onClick={this.togglePlaying}>{this.state.playing ? 'Stop' : 'Start'}</button>
       </div>
     )
   }
+}
+
+
+const bigFunction = (n) => {
+  return Promise.resolve(n)
+    .then(n => Array(n).fill(n))
+    .map(a => Array(a))
+    .map(a => a.map(b => Math.sqrt(b)))
 }
